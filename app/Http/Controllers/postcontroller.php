@@ -57,10 +57,26 @@ class postcontroller extends Controller
 
 // the name of the file is 'file'
 
-        $file = $request->file('file');
+        // $file = $request->file('file');
 
 
-        echo $file->getClientOriginalName() . '<br>';
+        // echo $file->getClientOriginalName() . '<br>';
+
+
+
+
+        $input = $request->all();
+
+        if($file = $request->file('file')){
+            
+            $name = $file->getClientOriginalName();
+
+            $file->move('images', $name);
+// name in database
+            $input['path'] = $name;
+
+            Post::create($input);
+        }
 
 
 
